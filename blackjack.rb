@@ -1,6 +1,5 @@
-require_relative "card"
-require_relative "deck"
-
+require_relative 'card'
+require_relative 'deck'
 
 class Blackjack
 
@@ -9,7 +8,7 @@ class Blackjack
   attr_accessor :player_hand, :cpu_hand, :player_score, :cpu_score, :bjdeck
 
   def initialize
-    puts "Beat the Dealer --- Blackjack"
+    puts 'Beat the Dealer --- Blackjack'
     self.player_hand = []
     self.cpu_hand = []
     self.player_score = 0
@@ -20,9 +19,9 @@ class Blackjack
 
   def deal
     hit = bjdeck.draw
-    self.player_hand << hit
+    player_hand << hit
     hit = bjdeck.draw
-    self.cpu_hand << hit
+    cpu_hand << hit
   end
 
   def start_cards
@@ -37,15 +36,15 @@ class Blackjack
 
   def hand_simp(hand)
     hand = hand.collect
-    hand.each { |card| card.to_s }.join(",")
+    hand.each { |card| card.to_s }.join(',')
   end
 
   def play
     2.times { deal }
     start_cards
-    if player_hand.collect{|x| x.value}.inject(:+) == 21
+    if player_hand.collect { |x| x.value }.inject(:+) == 21
       natural
-    elsif cpu_hand.collect{|x| x.value}.inject(:+) == 21
+    elsif cpu_hand.collect { |x| x.value }.inject(:+) == 21
       natural
     else
       turn
@@ -54,19 +53,19 @@ class Blackjack
 
 
   def turn
-    puts "Would you like to HIT or STAY?!"
+    puts 'Would you like to HIT or STAY?!'
     answ = gets.chomp.downcase
-    until answ == "hit" || answ == "stay"
-      puts "Do you want me to call the pit boss?! HIT or STAY??"
+    until answ == 'hit' || answ == 'stay'
+      puts 'Do you want me to call the pit boss?! HIT or STAY??'
       answ = gets.chomp.downcase
     end
 
-    if answ == "hit"
+    if answ == 'hit'
       hit = bjdeck.draw
       player_hand << hit
       show_cards
-      if player_hand.collect{|x| x.value}.inject(:+) > 21
-        puts "BUST! --- You Lose!"
+      if player_hand.collect { |x| x.value }.inject(:+) > 21
+        puts 'BUST! --- You Lose!'
         bust
       else
         turn
@@ -77,23 +76,23 @@ class Blackjack
   end
 
   def cpu_turn
-    puts "and the Dealers hand is...? Press [Enter]"
+    puts 'and the Dealers hand is...? Press [Enter]'
     gets.chomp
-    until cpu_hand.collect{|x| x.value}.inject(:+) > 16
-      puts "Dealer HITS!"
+    until cpu_hand.collect { |x| x.value }.inject(:+) > 16
+      puts 'Dealer HITS!'
       hit = bjdeck.draw
       cpu_hand << hit
       show_cards
     end
 
-    if cpu_hand.collect{|x| x.value}.inject(:+)  > 21
-      puts "Dealer BUST!"
+    if cpu_hand.collect { |x| x.value }.inject(:+) > 21
+      puts 'Dealer BUST!'
       bank
     else
       show_cards
-      if player_hand.collect{|x| x.value}.inject(:+) > cpu_hand.collect{|x| x.value}.inject(:+)
+      if player_hand.collect { |x| x.value }.inject(:+) > cpu_hand.collect{ |x| x.value }.inject(:+)
         bank
-      elsif cpu_hand.collect{|x| x.value}.inject(:+) > player_hand.collect{|x| x.value}.inject(:+)
+      elsif cpu_hand.collect { |x| x.value }.inject(:+) > player_hand.collect{ |x| x.value }.inject(:+)
         bust
       else
         bank
@@ -102,34 +101,34 @@ class Blackjack
   end
 
   def bank
-    puts "You WIN! --- Your in the MONEY!"
+    puts 'You WIN! --- Your in the MONEY!'
     new_game
   end
 
   def natural
-    puts "21! Blackjack! --- Your in the MONEY!"
+    puts '21! Blackjack! --- Your in the MONEY!'
     new_game
   end
 
   def bust
-    puts "The house ALWAYS WINS! --- You LOSE!"
+    puts 'The house ALWAYS WINS! --- You LOSE!'
     new_game
   end
 
   def new_game
-    puts "Continue? (y/n)"
+    puts 'Continue? (y/n)'
     answ = gets.chomp.downcase
-    until answ == "y" || answ == "n"
+    until answ == 'y' || answ == 'n'
       puts "I think you've had too much to drink. Do you want to play? (y/n)"
       answ = gets.chomp.downcase
     end
 
-    if answ == "y"
-      puts ""
+    if answ == 'y'
+      puts ''
       initialize
       play
-    else answ == "n"
-      puts "The house ALWAYS WINS! --- come back when you have more money!"
+    elsif answ == 'n'
+      puts 'The house ALWAYS WINS! --- come back when you have more money!'
     end
   end
 end

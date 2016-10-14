@@ -45,7 +45,7 @@ class Blackjack
     if player_hand.collect { |x| x.value }.inject(:+) == 21
       natural
     elsif cpu_hand.collect { |x| x.value }.inject(:+) == 21
-      natural
+      natural_lose
     else
       turn
     end
@@ -64,7 +64,9 @@ class Blackjack
       hit = bjdeck.draw
       player_hand << hit
       show_cards
-      if player_hand.collect { |x| x.value }.inject(:+) > 21
+      if player_hand.collect { |x| x.value }.inject(:+) == 21
+        natural
+      elsif player_hand.collect { |x| x.value }.inject(:+) > 21
         puts 'BUST! --- You Lose!'
         bust
       else
@@ -85,7 +87,11 @@ class Blackjack
       show_cards
     end
 
-    if cpu_hand.collect { |x| x.value }.inject(:+) > 21
+    if cpu_hand.collect { |x| x.value }.inject(:+) == 21
+      natural_lose
+      show_cards
+
+    elsif cpu_hand.collect { |x| x.value }.inject(:+) > 21
       puts 'Dealer BUST!'
       bank
     else
@@ -95,7 +101,8 @@ class Blackjack
       elsif cpu_hand.collect { |x| x.value }.inject(:+) > player_hand.collect{ |x| x.value }.inject(:+)
         bust
       else
-        bank
+        puts 'Draw --- You WIN!'
+        new_game
       end
     end
   end
@@ -107,6 +114,11 @@ class Blackjack
 
   def natural
     puts '21! Blackjack! --- Your in the MONEY!'
+    new_game
+  end
+
+  def natural_lose
+    puts 'Dealer hits 21! Blackjack! --- You LOSE!'
     new_game
   end
 

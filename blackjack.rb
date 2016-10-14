@@ -25,7 +25,7 @@ class Blackjack
   end
 
   def start_cards
-    puts "Dealer #{hand_simp(cpu_hand.drop(1))}"
+    puts "Dealer #{hand_simp(cpu_hand.drop(1))}" #first
     puts "Player #{hand_simp(player_hand)}"
   end
 
@@ -44,7 +44,13 @@ class Blackjack
     start_cards
     if player_hand.collect { |x| x.value }.inject(:+) == 21
       natural
+    elsif player_hand.collect { |x| x.value }.inject(:+) > 21
+      bust
+    elsif cpu_hand.collect { |x| x.value }.inject(:+) > 21
+      show_cards
+      bank
     elsif cpu_hand.collect { |x| x.value }.inject(:+) == 21
+      show_cards
       natural_lose
     else
       turn
@@ -53,12 +59,16 @@ class Blackjack
 
 
   def turn
+    if player_hand.collect{|x| x.value}.inject(:+) < 21 && player_hand.length == 6
+      under
+    else
     puts 'Would you like to HIT or STAY?!'
     answ = gets.chomp.downcase
     until answ == 'hit' || answ == 'stay'
       puts 'Do you want me to call the pit boss?! HIT or STAY??'
       answ = gets.chomp.downcase
     end
+  end
 
     if answ == 'hit'
       hit = bjdeck.draw
@@ -124,6 +134,11 @@ class Blackjack
 
   def bust
     puts 'The house ALWAYS WINS! --- You LOSE!'
+    new_game
+  end
+
+  def under
+    puts "Six cards - and your under 21! - YOU WIN!"
     new_game
   end
 

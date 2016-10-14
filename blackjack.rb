@@ -35,8 +35,7 @@ class Blackjack
   end
 
   def hand_simp(hand)
-    hand = hand.collect
-    hand.each { |card| card.to_s }.join(',')
+    hand.collect { |card| card.to_s }.join(',')
   end
 
   def play
@@ -156,6 +155,7 @@ class Blackjack
       play
     elsif answ == 'n'
       puts 'The house ALWAYS WINS! --- come back when you have more money!'
+      exit
     end
   end
 end

@@ -29,7 +29,7 @@ class Blackjack
     puts "Player #{hand_simp(player_hand)}"
   end
 
-  def show_cards                          #"score" is now being used in place of show_cards
+  def show_cards  #"score" is now being used in place of show_cards / use show_cards for simple versoin!
     puts "Dealer #{hand_simp(cpu_hand)}"
     puts "Player #{hand_simp(player_hand)}"
   end

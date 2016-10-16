@@ -25,11 +25,11 @@ class Blackjack
   end
 
   def start_cards
-    puts "Dealer #{hand_simp(cpu_hand.drop(1))}" #first
+    puts "Dealer #{hand_simp(cpu_hand.drop(1))}"
     puts "Player #{hand_simp(player_hand)}"
   end
 
-  def show_cards
+  def show_cards                          #"score" is now being used in place of show_cards
     puts "Dealer #{hand_simp(cpu_hand)}"
     puts "Player #{hand_simp(player_hand)}"
   end
@@ -46,10 +46,10 @@ class Blackjack
     elsif player_hand.collect { |x| x.value }.inject(:+) > 21
       bust
     elsif cpu_hand.collect { |x| x.value }.inject(:+) > 21
-      show_cards
+      score
       bank
     elsif cpu_hand.collect { |x| x.value }.inject(:+) == 21
-      show_cards
+      score
       natural_lose
     else
       turn
@@ -72,7 +72,7 @@ class Blackjack
     if answ == 'hit'
       hit = bjdeck.draw
       player_hand << hit
-      show_cards
+      score
       if player_hand.collect { |x| x.value }.inject(:+) == 21
         natural
       elsif player_hand.collect { |x| x.value }.inject(:+) > 21
@@ -93,28 +93,38 @@ class Blackjack
       puts 'Dealer HITS!'
       hit = bjdeck.draw
       cpu_hand << hit
-      show_cards
+      score
     end
 
     if cpu_hand.collect { |x| x.value }.inject(:+) == 21
       natural_lose
-      show_cards
+      score
 
     elsif cpu_hand.collect { |x| x.value }.inject(:+) > 21
       puts 'Dealer BUST!'
       bank
     else
-      show_cards
+      score
       if player_hand.collect { |x| x.value }.inject(:+) > cpu_hand.collect{ |x| x.value }.inject(:+)
         bank
       elsif cpu_hand.collect { |x| x.value }.inject(:+) > player_hand.collect{ |x| x.value }.inject(:+)
         bust
       else
-        puts 'Draw --- You WIN!'
-        new_game
+        puts 'DRAW!! --- Who has the most cards?'
+        x = player_hand.length
+        y = cpu_hand.length
+        puts "Player = #{x} cards, House = #{y}."
+        if cpu_hand.length < player_hand.length
+          bank
+        elsif cpu_hand.length > player_hand.length
+          bust
+        else
+          puts 'True DRAW!! --- Your in the MONEY!'
+          bank
       end
     end
   end
+end
 
   def bank
     puts 'You WIN! --- Your in the MONEY!'
@@ -139,6 +149,14 @@ class Blackjack
   def under
     puts "Six cards - and your under 21! - YOU WIN!"
     new_game
+  end
+
+  def score
+    player_score = player_hand.collect{ |x| x.value}.inject(:+)
+    cpu_score = cpu_hand.collect{ |x| x.value}.inject(:+)
+    puts "Player = #{player_hand.collect{ |x| "#{x.face} of #{x.suit}"}.join(" + ")}, Total = #{player_score}"
+    puts "House = #{cpu_hand.collect{ |x| "#{x.face} of #{x.suit}"}.join(" + ")}, Total = #{cpu_score}"
+    puts ""
   end
 
   def new_game

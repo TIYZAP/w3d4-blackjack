@@ -62,9 +62,6 @@ class Blackjack
     player_hand.collect(&:value).inject(:+)
   end
 
-
-
-
   def turn
 
     if player_hand_total_value < 21 && player_hand.length == 6
@@ -135,11 +132,10 @@ class Blackjack
     end
   end
 
- # Keith's new cpu Method below
+  # Keith's new cpu Method below
   def cpu_hand_total_value
     cpu_hand.collect(&:value).inject(:+)
   end
-
 
   def bank
     puts 'You WIN! --- Your in the MONEY!'

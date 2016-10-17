@@ -1,7 +1,6 @@
-require_relative "card"
+require_relative 'card'
 
 class Deck
-
   attr_accessor :cards
 
   def initialize
@@ -10,13 +9,13 @@ class Deck
     self.cards = []
     suit.each do |suit|
       face.each do |face|
-        self.cards << Card.new(face, suit)
+        cards << Card.new(face, suit)
       end
     end
   end
 
   def shuffle
-    self.cards.shuffle!
+    cards.shuffle!
   end
 
   def draw
@@ -26,6 +25,4 @@ class Deck
   def empty?
     cards.empty?
   end
-
-
 end

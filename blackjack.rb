@@ -2,7 +2,6 @@ require_relative 'card'
 require_relative 'deck'
 
 class Blackjack
-
   include Comparable
 
   attr_accessor :player_hand, :cpu_hand, :player_score, :cpu_score, :bjdeck
@@ -29,7 +28,9 @@ class Blackjack
     puts "Player #{hand_simp(player_hand)}"
   end
 
-  def show_cards  #"score" is now being used in place of show_cards / use show_cards for simple versoin!
+  def show_cards
+    #"score" is now being used in place of show_cards /
+    # use show_cards for simple versoin!
     puts "Dealer #{hand_simp(cpu_hand)}"
     puts "Player #{hand_simp(player_hand)}"
   end

@@ -121,10 +121,10 @@ class Blackjack
         else
           puts 'True DRAW!! --- Your in the MONEY!'
           bank
+        end
       end
     end
   end
-end
 
   def bank
     puts 'You WIN! --- Your in the MONEY!'

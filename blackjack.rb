@@ -57,6 +57,14 @@ class Blackjack
     end
   end
 
+  # Keith's new Player Methods start below-------------------------
+  def player_hand_total_value
+    player_hand.collect(&:value).inject(:+)
+  end
+
+
+
+
   def turn
     if player_hand.collect(&:value).inject(:+) < 21 && player_hand.length == 6
       under
@@ -73,9 +81,9 @@ class Blackjack
       hit = bjdeck.draw
       player_hand << hit
       score
-      if player_hand.collect(&:value).inject(:+) == 21
+      if player_hand_total_value == 21
         natural
-      elsif player_hand.collect(&:value).inject(:+) > 21
+      elsif player_hand_total_value > 21
         puts 'BUST! --- You Lose!'
         bust
       else
@@ -105,7 +113,7 @@ class Blackjack
       bank
     else
       score
-      if player_hand.collect(&:value).inject(:+) > cpu_hand.collect(&:value).inject(:+)
+      if player_hand_total_value > cpu_hand.collect(&:value).inject(:+)
         bank
       elsif cpu_hand.collect(&:value).inject(:+) > player_hand.collect(&:value).inject(:+)
         bust
@@ -152,7 +160,7 @@ class Blackjack
   end
 
   def score
-    player_score = player_hand.collect(&:value).inject(:+)
+    player_score = player_hand_total_value
     cpu_score = cpu_hand.collect(&:value).inject(:+)
     puts "Player = #{player_hand.collect { |x| "#{x.face} of #{x.suit}" }.join(' + ')}, Total = #{player_score}"
     puts "House = #{cpu_hand.collect { |x| "#{x.face} of #{x.suit}" }.join(' + ')}, Total = #{cpu_score}"

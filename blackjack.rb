@@ -66,6 +66,7 @@ class Blackjack
 
 
   def turn
+
     if player_hand_total_value < 21 && player_hand.length == 6
       under
     else
@@ -127,7 +128,7 @@ class Blackjack
         elsif cpu_hand.length > player_hand.length
           bust
         else
-          puts 'True DRAW!! --- Your in the MONEY!'
+          puts "True DRAW!! --- You're in the MONEY!"
           bank
         end
       end
@@ -167,7 +168,7 @@ class Blackjack
 
   def score
     player_score = player_hand_total_value
-    cpu_score = cpu_hand.collect(&:value).inject(:+)
+    cpu_score = cpu_hand_total_value
     puts "Player = #{player_hand.collect { |x| "#{x.face} of #{x.suit}" }.join(' + ')}, Total = #{player_score}"
     puts "House = #{cpu_hand.collect { |x| "#{x.face} of #{x.suit}" }.join(' + ')}, Total = #{cpu_score}"
     puts ''
